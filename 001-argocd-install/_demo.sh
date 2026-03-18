@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -euo pipefail
+
 ###
 ### ArgoCD Install lab - explore ArgoCD components and CRDs
 ###
 
 ROOT_FOLDER=$(git rev-parse --show-toplevel)
+source "$ROOT_FOLDER/_utils/common.sh"
 source $ROOT_FOLDER/_utils/common.sh 2>/dev/null || true
 
 echo "----------------------------------------------------------------------"

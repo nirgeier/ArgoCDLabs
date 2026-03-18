@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -euo pipefail
+
 ###
 ### Health Checks lab - inspect and test ArgoCD health states
 ###
 
 ROOT_FOLDER=$(git rev-parse --show-toplevel)
+source "$ROOT_FOLDER/_utils/common.sh"
 source $ROOT_FOLDER/_utils/common.sh 2>/dev/null || true
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443 &

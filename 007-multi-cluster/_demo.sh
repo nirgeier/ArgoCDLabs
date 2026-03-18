@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -euo pipefail
+
 ###
 ### Multi-Cluster lab - register and deploy to a second cluster
 ###
 
 ROOT_FOLDER=$(git rev-parse --show-toplevel)
+source "$ROOT_FOLDER/_utils/common.sh"
 source $ROOT_FOLDER/_utils/common.sh 2>/dev/null || true
 
 echo "----------------------------------------------------------------------"

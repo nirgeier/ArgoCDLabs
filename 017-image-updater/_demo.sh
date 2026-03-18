@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -euo pipefail
+
 ###
 ### Image Updater lab - install and configure ArgoCD Image Updater
 ###
 
 ROOT_FOLDER=$(git rev-parse --show-toplevel)
+source "$ROOT_FOLDER/_utils/common.sh"
 source $ROOT_FOLDER/_utils/common.sh 2>/dev/null || true
 
 echo "----------------------------------------------------------------------"

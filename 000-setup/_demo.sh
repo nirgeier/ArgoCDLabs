@@ -1,11 +1,14 @@
 #!/bin/bash
 
+set -euo pipefail
+
 ###
 ### Setup lab - create a kind cluster and install ArgoCD
 ###
 
 # Get the root folder of our demo folder
 ROOT_FOLDER=$(git rev-parse --show-toplevel)
+source "$ROOT_FOLDER/_utils/common.sh"
 
 # Load the common script
 source $ROOT_FOLDER/_utils/common.sh 2>/dev/null || true
