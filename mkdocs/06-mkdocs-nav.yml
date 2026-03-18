@@ -1,0 +1,34 @@
+###
+### mkdocs-nav.yml
+###
+
+nav:
+  - Start Here: welcome.md
+  - Labs:
+      - index.md
+      - 000 Setup: 000-setup/README.md
+      - 001 ArgoCD Install: 001-argocd-install/README.md
+      - 002 First App: 002-first-app/README.md
+      - 003 Git Repo Connect: 003-git-repo-connect/README.md
+      - 004 Sync Policies: 004-sync-policies/README.md
+      - 005 Health Checks: 005-health-checks/README.md
+      - 006 Rollback: 006-rollback/README.md
+      - 007 Multi Cluster: 007-multi-cluster/README.md
+      - 008 App Of Apps: 008-app-of-apps/README.md
+      - 009 Helm Integration: 009-helm-integration/README.md
+      - 010 Kustomize: 010-kustomize/README.md
+      - 011 Notifications: 011-notifications/README.md
+      - 012 RBAC: 012-rbac/README.md
+      - 013 SSO: 013-sso/README.md
+      - 014 Projects: 014-projects/README.md
+      - 015 Waves And Hooks: 015-waves-hooks/README.md
+      - 016 Secrets Management: 016-secrets-management/README.md
+      - 017 Image Updater: 017-image-updater/README.md
+      - 018 CI Integration: 018-ci-integration/README.md
+      - 019 Monitoring: 019-monitoring/README.md
+      - 020 Disaster Recovery: 020-disaster-recovery/README.md
+      - 021 Multi Tenancy: 021-multi-tenancy/README.md
+      - 022 App Sets: 022-app-sets/README.md
+      - 023 Progressive Delivery: 023-progressive-delivery/README.md
+      - 024 GitOps Best Practices: 024-gitops-best-practices/README.md
+      - 025 Advanced Patterns: 025-advanced-patterns/README.md

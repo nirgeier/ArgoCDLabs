@@ -1,0 +1,12 @@
+###
+### mkdocs-site.yml
+###
+docs_dir: Labs
+edit_uri: ""
+repo_name: nirgeier/ArgoCDLabs
+repo_url: https://github.com/nirgeier/ArgoCDLabs
+site_author: Nir Geier - nirgeier@gmail.com
+site_description: A collection of ArgoCD Labs for learning and practicing GitOps and ArgoCD skills.
+site_dir: ./mkdocs-site
+site_name: ArgoCDLabs
+site_url: https://nirgeier.github.io/ArgoCDLabs/

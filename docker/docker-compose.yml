@@ -1,0 +1,31 @@
+services:
+
+  # ── ArgoCD Labs web terminal UI ───────────────────────────────────────────────
+  argocd-labs:
+    build:
+      args:
+        BUILD_TIME: ${BUILD_TIME:-}
+        IMAGE: ${IMAGE:-ghcr.io/nirgeier/argocd-labs}
+        IMAGE_TAG: ${IMAGE_TAG:-latest}
+        SourceRepository: ${SourceRepository:-}
+      context: ..
+      dockerfile: docker/Dockerfile
+      x-bake:
+        platforms:
+          - linux/amd64
+          - linux/arm64
+        tags:
+          - ghcr.io/nirgeier/argocd-labs:latest
+          - ghcr.io/nirgeier/argocd-labs:${IMAGE_TAG:-latest}
+          - nirgeier/argocd-labs:latest
+          - nirgeier/argocd-labs:${IMAGE_TAG:-latest}
+    container_name: argocd-labs
+    image: "ghcr.io/nirgeier/argocd-labs:${IMAGE_TAG:-latest}"
+    labels:
+      - "com.example.app.Metadata.LastTagTime=${BUILD_TIME:-}"
+      - "com.example.app.Metadata.SourceRepository=${SourceRepository:-}"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

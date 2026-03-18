@@ -1,0 +1,29 @@
+name: Lab-012.yaml
+
+on:
+  push:
+    branches:
+      - main
+      - mkdocs
+      - gh-pages
+    paths:
+      - "Labs/012-rbac/**"
+  pull_request:
+    branches:
+      - main
+      - mkdocs
+      - gh-pages
+    paths:
+      - "Labs/012-rbac/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Execute the step demo to verify that all is working
+    steps:
+      # Check out the code
+      - uses: actions/checkout@v4
+
+      - name: Test Lab
+        working-directory: Labs/012-rbac
+        run: bash ./_demo.sh
