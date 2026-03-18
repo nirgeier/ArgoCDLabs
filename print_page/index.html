@@ -1068,58 +1068,52 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="000-setup-08-hands-on">08. Hands-on<a class="headerlink" href="#000-setup-08-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create a kind cluster named <code>argocd-labs</code> and verify the node is Ready:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#000-setup-__codelineno-9-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>argocd-labs
+<li>
+<p>Create a kind cluster named <code>argocd-labs</code> and verify the node is Ready:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#000-setup-__codelineno-9-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>argocd-labs
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#000-setup-__codelineno-9-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>--context<span class="w"> </span>kind-argocd-labs
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Install ArgoCD and wait until all pods in the <code>argocd</code> namespace are Running:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#000-setup-__codelineno-10-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>argocd
+</li>
+<li>
+<p>Install ArgoCD and wait until all pods in the <code>argocd</code> namespace are Running:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#000-setup-__codelineno-10-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>argocd
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#000-setup-__codelineno-10-2"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#000-setup-__codelineno-10-3"></a><span class="w">  </span>-f<span class="w"> </span>https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#000-setup-__codelineno-10-4"></a>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>pods<span class="w"> </span>--all<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--timeout<span class="o">=</span>300s
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#000-setup-__codelineno-10-5"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Port-forward the ArgoCD server and log in with the CLI using the initial admin password:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#000-setup-__codelineno-11-1"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/argocd-server<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="m">8080</span>:443<span class="w"> </span><span class="p">&amp;</span>
+</li>
+<li>
+<p>Port-forward the ArgoCD server and log in with the CLI using the initial admin password:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#000-setup-__codelineno-11-1"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/argocd-server<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="m">8080</span>:443<span class="w"> </span><span class="p">&amp;</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#000-setup-__codelineno-11-2"></a><span class="nv">ARGOCD_PASS</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>argocd-initial-admin-secret<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#000-setup-__codelineno-11-3"></a><span class="w">  </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.data.password}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="k">)</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#000-setup-__codelineno-11-4"></a>argocd<span class="w"> </span>login<span class="w"> </span>localhost:8080<span class="w"> </span>--username<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGOCD_PASS</span><span class="s2">&quot;</span><span class="w"> </span>--insecure
 </span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#000-setup-__codelineno-11-5"></a>argocd<span class="w"> </span>version
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>List all ArgoCD CRDs installed in the cluster:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#000-setup-__codelineno-12-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>argoproj
+</li>
+<li>
+<p>List all ArgoCD CRDs installed in the cluster:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#000-setup-__codelineno-12-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>argoproj
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#000-setup-__codelineno-12-2"></a><span class="c1"># Expected output includes:</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#000-setup-__codelineno-12-3"></a><span class="c1"># applications.argoproj.io</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#000-setup-__codelineno-12-4"></a><span class="c1"># applicationsets.argoproj.io</span>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#000-setup-__codelineno-12-5"></a><span class="c1"># appprojects.argoproj.io</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="000-setup-09-summary">09. Summary<a class="headerlink" href="#000-setup-09-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1257,56 +1251,50 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="001-argocd-install-07-hands-on">07. Hands-on<a class="headerlink" href="#001-argocd-install-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>List all pods in the <code>argocd</code> namespace and confirm every pod is <code>1/1 Running</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#001-argocd-install-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd
+<li>
+<p>List all pods in the <code>argocd</code> namespace and confirm every pod is <code>1/1 Running</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#001-argocd-install-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#001-argocd-install-__codelineno-5-2"></a><span class="c1"># All pods should show STATUS=Running and READY=1/1</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Describe the <code>argocd-application-controller</code> StatefulSet and find its replica count and image version:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#001-argocd-install-__codelineno-6-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>statefulset<span class="w"> </span>argocd-application-controller<span class="w"> </span>-n<span class="w"> </span>argocd
+</li>
+<li>
+<p>Describe the <code>argocd-application-controller</code> StatefulSet and find its replica count and image version:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#001-argocd-install-__codelineno-6-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>statefulset<span class="w"> </span>argocd-application-controller<span class="w"> </span>-n<span class="w"> </span>argocd
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#001-argocd-install-__codelineno-6-2"></a><span class="c1"># Look for: Replicas and Image fields</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#001-argocd-install-__codelineno-6-3"></a>kubectl<span class="w"> </span>get<span class="w"> </span>statefulset<span class="w"> </span>argocd-application-controller<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#001-argocd-install-__codelineno-6-4"></a><span class="w">  </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.template.spec.containers[0].image}&#39;</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>List all three ArgoCD CRDs and print the full name of each:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#001-argocd-install-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>argoproj.io
+</li>
+<li>
+<p>List all three ArgoCD CRDs and print the full name of each:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#001-argocd-install-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>argoproj.io
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#001-argocd-install-__codelineno-7-2"></a><span class="c1"># Expected:</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#001-argocd-install-__codelineno-7-3"></a><span class="c1"># applicationsets.argoproj.io</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#001-argocd-install-__codelineno-7-4"></a><span class="c1"># applications.argoproj.io</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#001-argocd-install-__codelineno-7-5"></a><span class="c1"># appprojects.argoproj.io</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Inspect the <code>argocd-cm</code> ConfigMap and identify where you would set the <code>admin.enabled</code> flag:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#001-argocd-install-__codelineno-8-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
+</li>
+<li>
+<p>Inspect the <code>argocd-cm</code> ConfigMap and identify where you would set the <code>admin.enabled</code> flag:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#001-argocd-install-__codelineno-8-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#001-argocd-install-__codelineno-8-2"></a><span class="c1"># The admin.enabled key can be added under data:</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#001-argocd-install-__codelineno-8-3"></a><span class="c1"># data:</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#001-argocd-install-__codelineno-8-4"></a><span class="c1">#   admin.enabled: &quot;true&quot;</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="001-argocd-install-08-summary">08. Summary<a class="headerlink" href="#001-argocd-install-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1450,11 +1438,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="002-first-app-07-hands-on">07. Hands-on<a class="headerlink" href="#002-first-app-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create an ArgoCD Application pointing to <code>https://github.com/argoproj/argocd-example-apps.git</code>, path <code>guestbook</code>, in namespace <code>guestbook</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#002-first-app-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Create an ArgoCD Application pointing to <code>https://github.com/argoproj/argocd-example-apps.git</code>, path <code>guestbook</code>, in namespace <code>guestbook</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#002-first-app-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#002-first-app-__codelineno-7-2"></a><span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#002-first-app-__codelineno-7-3"></a><span class="w">  </span>--path<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#002-first-app-__codelineno-7-4"></a><span class="w">  </span>--dest-server<span class="w"> </span>https://kubernetes.default.svc<span class="w"> </span><span class="se">\</span>
@@ -1462,45 +1451,38 @@
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#002-first-app-__codelineno-7-6"></a><span class="w">  </span>--sync-option<span class="w"> </span><span class="nv">CreateNamespace</span><span class="o">=</span><span class="nb">true</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#002-first-app-__codelineno-7-7"></a>argocd<span class="w"> </span>app<span class="w"> </span>list
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Sync the application and wait until health is <code>Healthy</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#002-first-app-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
+</li>
+<li>
+<p>Sync the application and wait until health is <code>Healthy</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#002-first-app-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#002-first-app-__codelineno-8-2"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>guestbook<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#002-first-app-__codelineno-8-3"></a>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Verify the pods and service are running in the <code>guestbook</code> namespace:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#002-first-app-__codelineno-9-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook
+</li>
+<li>
+<p>Verify the pods and service are running in the <code>guestbook</code> namespace:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#002-first-app-__codelineno-9-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#002-first-app-__codelineno-9-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>guestbook
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Delete a pod in the <code>guestbook</code> namespace and observe that Kubernetes (not ArgoCD) restores it automatically:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#002-first-app-__codelineno-10-1"></a><span class="nv">POD</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].metadata.name}&#39;</span><span class="k">)</span>
+</li>
+<li>
+<p>Delete a pod in the <code>guestbook</code> namespace and observe that Kubernetes (not ArgoCD) restores it automatically:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#002-first-app-__codelineno-10-1"></a><span class="nv">POD</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].metadata.name}&#39;</span><span class="k">)</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#002-first-app-__codelineno-10-2"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$POD</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span>guestbook
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#002-first-app-__codelineno-10-3"></a><span class="c1"># Kubernetes ReplicaSet controller recreates it</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#002-first-app-__codelineno-10-4"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>-w
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="002-first-app-08-summary">08. Summary<a class="headerlink" href="#002-first-app-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1617,56 +1599,50 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="003-git-repo-connect-07-hands-on">07. Hands-on<a class="headerlink" href="#003-git-repo-connect-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Add the public <code>argocd-example-apps</code> repository via HTTPS and verify its status is <code>Successful</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#003-git-repo-connect-__codelineno-6-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git
+<li>
+<p>Add the public <code>argocd-example-apps</code> repository via HTTPS and verify its status is <code>Successful</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#003-git-repo-connect-__codelineno-6-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#003-git-repo-connect-__codelineno-6-2"></a>argocd<span class="w"> </span>repo<span class="w"> </span>list
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#003-git-repo-connect-__codelineno-6-3"></a><span class="c1"># ConnectionState should show: Successful</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Add the Bitnami Helm repository and list all repositories including their type:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#003-git-repo-connect-__codelineno-7-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>https://charts.bitnami.com/bitnami<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Add the Bitnami Helm repository and list all repositories including their type:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#003-git-repo-connect-__codelineno-7-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>https://charts.bitnami.com/bitnami<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#003-git-repo-connect-__codelineno-7-2"></a><span class="w">  </span>--type<span class="w"> </span>helm<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#003-git-repo-connect-__codelineno-7-3"></a><span class="w">  </span>--name<span class="w"> </span>bitnami
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#003-git-repo-connect-__codelineno-7-4"></a>argocd<span class="w"> </span>repo<span class="w"> </span>list
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#003-git-repo-connect-__codelineno-7-5"></a><span class="c1"># Should show TYPE=helm for the Bitnami entry</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Inspect the Kubernetes Secret that ArgoCD created for the connected repository:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#003-git-repo-connect-__codelineno-8-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Inspect the Kubernetes Secret that ArgoCD created for the connected repository:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#003-git-repo-connect-__codelineno-8-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#003-git-repo-connect-__codelineno-8-2"></a><span class="w">  </span>-l<span class="w"> </span><span class="s2">&quot;argocd.argoproj.io/secret-type=repository&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#003-git-repo-connect-__codelineno-8-3"></a><span class="w">  </span>-o<span class="w"> </span>yaml
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#003-git-repo-connect-__codelineno-8-4"></a><span class="c1"># Note: values are base64 encoded</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Remove the Bitnami repo and verify it no longer appears in the list:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#003-git-repo-connect-__codelineno-9-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>rm<span class="w"> </span>https://charts.bitnami.com/bitnami
+</li>
+<li>
+<p>Remove the Bitnami repo and verify it no longer appears in the list:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#003-git-repo-connect-__codelineno-9-1"></a>argocd<span class="w"> </span>repo<span class="w"> </span>rm<span class="w"> </span>https://charts.bitnami.com/bitnami
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#003-git-repo-connect-__codelineno-9-2"></a>argocd<span class="w"> </span>repo<span class="w"> </span>list
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#003-git-repo-connect-__codelineno-9-3"></a><span class="c1"># Bitnami entry should be gone</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="003-git-repo-connect-08-summary">08. Summary<a class="headerlink" href="#003-git-repo-connect-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1809,42 +1785,38 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="004-sync-policies-07-hands-on">07. Hands-on<a class="headerlink" href="#004-sync-policies-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Enable automated sync with SelfHeal and Prune on the <code>guestbook</code> app, then manually scale the deployment to 3 replicas and watch ArgoCD revert it:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#004-sync-policies-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>guestbook<span class="w"> </span>--sync-policy<span class="w"> </span>automated<span class="w"> </span>--self-heal<span class="w"> </span>--auto-prune
+<li>
+<p>Enable automated sync with SelfHeal and Prune on the <code>guestbook</code> app, then manually scale the deployment to 3 replicas and watch ArgoCD revert it:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#004-sync-policies-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>guestbook<span class="w"> </span>--sync-policy<span class="w"> </span>automated<span class="w"> </span>--self-heal<span class="w"> </span>--auto-prune
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#004-sync-policies-__codelineno-6-2"></a>kubectl<span class="w"> </span>scale<span class="w"> </span>deployment<span class="w"> </span>guestbook-ui<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>--replicas<span class="o">=</span><span class="m">3</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#004-sync-policies-__codelineno-6-3"></a><span class="c1"># Wait ~3 minutes and watch the replicas go back to 1</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#004-sync-policies-__codelineno-6-4"></a>kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>guestbook-ui<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>-w
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Create an orphan ConfigMap in the <code>guestbook</code> namespace and verify that a manual sync with <code>--prune</code> removes it:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#004-sync-policies-__codelineno-7-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>orphan<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>--from-literal<span class="o">=</span><span class="nv">test</span><span class="o">=</span><span class="nb">true</span>
+</li>
+<li>
+<p>Create an orphan ConfigMap in the <code>guestbook</code> namespace and verify that a manual sync with <code>--prune</code> removes it:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#004-sync-policies-__codelineno-7-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>orphan<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>--from-literal<span class="o">=</span><span class="nv">test</span><span class="o">=</span><span class="nb">true</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#004-sync-policies-__codelineno-7-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>-n<span class="w"> </span>guestbook
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#004-sync-policies-__codelineno-7-3"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook<span class="w"> </span>--prune
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#004-sync-policies-__codelineno-7-4"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w">  </span><span class="c1"># orphan should be gone</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Perform a dry-run sync and observe the output without applying any changes:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#004-sync-policies-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook<span class="w"> </span>--dry-run
+</li>
+<li>
+<p>Perform a dry-run sync and observe the output without applying any changes:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#004-sync-policies-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook<span class="w"> </span>--dry-run
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#004-sync-policies-__codelineno-8-2"></a><span class="c1"># Output shows what would be applied - no actual changes made</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="004-sync-policies-08-summary">08. Summary<a class="headerlink" href="#004-sync-policies-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2000,23 +1972,22 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="005-health-checks-06-hands-on">06. Hands-on<a class="headerlink" href="#005-health-checks-06-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Get the health status of all resources in the <code>guestbook</code> application and identify the overall health:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#005-health-checks-__codelineno-4-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
+<li>
+<p>Get the health status of all resources in the <code>guestbook</code> application and identify the overall health:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#005-health-checks-__codelineno-4-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#005-health-checks-__codelineno-4-2"></a>argocd<span class="w"> </span>app<span class="w"> </span>resources<span class="w"> </span>guestbook
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#005-health-checks-__codelineno-4-3"></a><span class="c1"># Health Status line shows: Healthy / Progressing / Degraded</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Force a <code>Degraded</code> state by setting an invalid image, observe the status, then restore with a sync:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#005-health-checks-__codelineno-5-1"></a>kubectl<span class="w"> </span><span class="nb">set</span><span class="w"> </span>image<span class="w"> </span>deployment/guestbook-ui<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Force a <code>Degraded</code> state by setting an invalid image, observe the status, then restore with a sync:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#005-health-checks-__codelineno-5-1"></a>kubectl<span class="w"> </span><span class="nb">set</span><span class="w"> </span>image<span class="w"> </span>deployment/guestbook-ui<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#005-health-checks-__codelineno-5-2"></a><span class="w">  </span>guestbook-ui<span class="o">=</span>nginx:does-not-exist<span class="w"> </span>-n<span class="w"> </span>guestbook
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#005-health-checks-__codelineno-5-3"></a>sleep<span class="w"> </span><span class="m">30</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#005-health-checks-__codelineno-5-4"></a>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
@@ -2024,23 +1995,20 @@
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#005-health-checks-__codelineno-5-6"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook<span class="w"> </span>--force
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#005-health-checks-__codelineno-5-7"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>guestbook<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Write a simple custom Lua health check in <code>argocd-cm</code> for a CRD with a <code>status.ready</code> boolean field:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#005-health-checks-__codelineno-6-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
+</li>
+<li>
+<p>Write a simple custom Lua health check in <code>argocd-cm</code> for a CRD with a <code>status.ready</code> boolean field:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#005-health-checks-__codelineno-6-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#005-health-checks-__codelineno-6-2"></a><span class="s1">  &quot;data&quot;: {</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#005-health-checks-__codelineno-6-3"></a><span class="s1">    &quot;resource.customizations.health.mygroup.io_MyResource&quot;: &quot;hs = {}\nif obj.status ~= nil and obj.status.ready == true then\n  hs.status = \&quot;Healthy\&quot;\n  hs.message = \&quot;Resource is ready\&quot;\nelse\n  hs.status = \&quot;Progressing\&quot;\n  hs.message = \&quot;Waiting for resource to be ready\&quot;\nend\nreturn hs\n&quot;</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#005-health-checks-__codelineno-6-4"></a><span class="s1">  }</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#005-health-checks-__codelineno-6-5"></a><span class="s1">}&#39;</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="005-health-checks-07-summary">07. Summary<a class="headerlink" href="#005-health-checks-07-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2139,41 +2107,37 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="006-rollback-07-hands-on">07. Hands-on<a class="headerlink" href="#006-rollback-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>View the sync history of the <code>guestbook</code> application:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#006-rollback-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">history</span><span class="w"> </span>guestbook
+<li>
+<p>View the sync history of the <code>guestbook</code> application:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#006-rollback-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">history</span><span class="w"> </span>guestbook
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Disable automated sync on the <code>guestbook</code> application then rollback to revision ID 0:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#006-rollback-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>guestbook<span class="w"> </span>--sync-policy<span class="w"> </span>none
+</li>
+<li>
+<p>Disable automated sync on the <code>guestbook</code> application then rollback to revision ID 0:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#006-rollback-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>guestbook<span class="w"> </span>--sync-policy<span class="w"> </span>none
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#006-rollback-__codelineno-7-2"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">history</span><span class="w"> </span>guestbook
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#006-rollback-__codelineno-7-3"></a>argocd<span class="w"> </span>app<span class="w"> </span>rollback<span class="w"> </span>guestbook<span class="w"> </span><span class="m">0</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#006-rollback-__codelineno-7-4"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>guestbook<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#006-rollback-__codelineno-7-5"></a>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>After rollback, sync back to HEAD and re-enable automated sync:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#006-rollback-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
+</li>
+<li>
+<p>After rollback, sync back to HEAD and re-enable automated sync:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#006-rollback-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#006-rollback-__codelineno-8-2"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>guestbook<span class="w"> </span>--sync-policy<span class="w"> </span>automated<span class="w"> </span>--self-heal
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#006-rollback-__codelineno-8-3"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>guestbook<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="006-rollback-08-summary">08. Summary<a class="headerlink" href="#006-rollback-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2293,24 +2257,23 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="007-multi-cluster-07-hands-on">07. Hands-on<a class="headerlink" href="#007-multi-cluster-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create a second kind cluster named <code>argocd-workload</code> and register it with ArgoCD:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#007-multi-cluster-__codelineno-6-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>argocd-workload<span class="w"> </span>--wait<span class="w"> </span>60s
+<li>
+<p>Create a second kind cluster named <code>argocd-workload</code> and register it with ArgoCD:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#007-multi-cluster-__codelineno-6-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>argocd-workload<span class="w"> </span>--wait<span class="w"> </span>60s
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#007-multi-cluster-__codelineno-6-2"></a>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>kind-argocd-labs
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#007-multi-cluster-__codelineno-6-3"></a>argocd<span class="w"> </span>cluster<span class="w"> </span>add<span class="w"> </span>kind-argocd-workload<span class="w"> </span>--name<span class="w"> </span>workload-cluster
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#007-multi-cluster-__codelineno-6-4"></a>argocd<span class="w"> </span>cluster<span class="w"> </span>list
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Deploy the <code>guestbook</code> application to the <code>workload-cluster</code> and verify the pods are running there:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#007-multi-cluster-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>guestbook-remote<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Deploy the <code>guestbook</code> application to the <code>workload-cluster</code> and verify the pods are running there:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#007-multi-cluster-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>guestbook-remote<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#007-multi-cluster-__codelineno-7-2"></a><span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#007-multi-cluster-__codelineno-7-3"></a><span class="w">  </span>--path<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#007-multi-cluster-__codelineno-7-4"></a><span class="w">  </span>--dest-name<span class="w"> </span>workload-cluster<span class="w"> </span><span class="se">\</span>
@@ -2320,22 +2283,19 @@
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#007-multi-cluster-__codelineno-7-8"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>guestbook-remote<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#007-multi-cluster-__codelineno-7-9"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>guestbook<span class="w"> </span>--context<span class="w"> </span>kind-argocd-workload
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Label the workload cluster with <code>env=staging</code> and verify the label appears in <code>argocd cluster list</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#007-multi-cluster-__codelineno-8-1"></a><span class="nv">WORKLOAD_SERVER</span><span class="o">=</span><span class="k">$(</span>argocd<span class="w"> </span>cluster<span class="w"> </span>list<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Label the workload cluster with <code>env=staging</code> and verify the label appears in <code>argocd cluster list</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#007-multi-cluster-__codelineno-8-1"></a><span class="nv">WORKLOAD_SERVER</span><span class="o">=</span><span class="k">$(</span>argocd<span class="w"> </span>cluster<span class="w"> </span>list<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#007-multi-cluster-__codelineno-8-2"></a><span class="w">  </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import sys,json; [print(c[&#39;server&#39;]) for c in json.load(sys.stdin) if c[&#39;name&#39;]==&#39;workload-cluster&#39;]&quot;</span><span class="k">)</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#007-multi-cluster-__codelineno-8-3"></a>argocd<span class="w"> </span>cluster<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$WORKLOAD_SERVER</span><span class="s2">&quot;</span><span class="w"> </span>--label<span class="w"> </span><span class="nv">env</span><span class="o">=</span>staging
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#007-multi-cluster-__codelineno-8-4"></a>argocd<span class="w"> </span>cluster<span class="w"> </span>list
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="007-multi-cluster-08-summary">08. Summary<a class="headerlink" href="#007-multi-cluster-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2486,11 +2446,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="008-app-of-apps-07-hands-on">07. Hands-on<a class="headerlink" href="#008-app-of-apps-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create a root ArgoCD Application pointing to the <code>apps</code> path of <code>argocd-example-apps</code> and list all generated child apps:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#008-app-of-apps-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>root-app<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Create a root ArgoCD Application pointing to the <code>apps</code> path of <code>argocd-example-apps</code> and list all generated child apps:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#008-app-of-apps-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>root-app<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#008-app-of-apps-__codelineno-6-2"></a><span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#008-app-of-apps-__codelineno-6-3"></a><span class="w">  </span>--path<span class="w"> </span>apps<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#008-app-of-apps-__codelineno-6-4"></a><span class="w">  </span>--dest-server<span class="w"> </span>https://kubernetes.default.svc<span class="w"> </span><span class="se">\</span>
@@ -2502,35 +2463,30 @@
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#008-app-of-apps-__codelineno-6-10"></a>sleep<span class="w"> </span><span class="m">10</span>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#008-app-of-apps-__codelineno-6-11"></a>argocd<span class="w"> </span>app<span class="w"> </span>list
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Verify that the child applications automatically create their namespaces and deploy their workloads:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#008-app-of-apps-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>namespaces<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;guestbook|nginx|helm&quot;</span>
+</li>
+<li>
+<p>Verify that the child applications automatically create their namespaces and deploy their workloads:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#008-app-of-apps-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>namespaces<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;guestbook|nginx|helm&quot;</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#008-app-of-apps-__codelineno-7-2"></a>argocd<span class="w"> </span>app<span class="w"> </span>list
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#008-app-of-apps-__codelineno-7-3"></a><span class="c1"># All child apps should eventually show Synced and Healthy</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Explain what the <code>resources-finalizer.argocd.argoproj.io</code> finalizer does and when you would omit it:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#008-app-of-apps-__codelineno-8-1"></a><span class="c1"># The finalizer causes a cascade delete - when the Application is removed,</span>
+</li>
+<li>
+<p>Explain what the <code>resources-finalizer.argocd.argoproj.io</code> finalizer does and when you would omit it:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#008-app-of-apps-__codelineno-8-1"></a><span class="c1"># The finalizer causes a cascade delete - when the Application is removed,</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#008-app-of-apps-__codelineno-8-2"></a><span class="c1"># all its Kubernetes resources are also deleted.</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#008-app-of-apps-__codelineno-8-3"></a><span class="c1"># You would OMIT it if you want to remove the ArgoCD Application without</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#008-app-of-apps-__codelineno-8-4"></a><span class="c1"># deleting the actual workloads (e.g., when migrating ArgoCD instances).</span>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#008-app-of-apps-__codelineno-8-5"></a>kubectl<span class="w"> </span>get<span class="w"> </span>application<span class="w"> </span>guestbook-child<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>finalizer<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="008-app-of-apps-08-summary">08. Summary<a class="headerlink" href="#008-app-of-apps-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2656,11 +2612,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="009-helm-integration-07-hands-on">07. Hands-on<a class="headerlink" href="#009-helm-integration-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create an ArgoCD Application using the Bitnami nginx Helm chart with <code>replicaCount=2</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#009-helm-integration-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>nginx-helm<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Create an ArgoCD Application using the Bitnami nginx Helm chart with <code>replicaCount=2</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#009-helm-integration-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>nginx-helm<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#009-helm-integration-__codelineno-6-2"></a><span class="w">  </span>--repo<span class="w"> </span>https://charts.bitnami.com/bitnami<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#009-helm-integration-__codelineno-6-3"></a><span class="w">  </span>--helm-chart<span class="w"> </span>nginx<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#009-helm-integration-__codelineno-6-4"></a><span class="w">  </span>--revision<span class="w"> </span><span class="m">15</span>.0.0<span class="w"> </span><span class="se">\</span>
@@ -2672,32 +2629,27 @@
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#009-helm-integration-__codelineno-6-10"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>nginx-helm
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#009-helm-integration-__codelineno-6-11"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>nginx-helm<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">180</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Update the <code>replicaCount</code> to 3 using <code>argocd app set --helm-set</code> and verify the deployment scales:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#009-helm-integration-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>nginx-helm<span class="w"> </span>--helm-set<span class="w"> </span><span class="nv">replicaCount</span><span class="o">=</span><span class="m">3</span>
+</li>
+<li>
+<p>Update the <code>replicaCount</code> to 3 using <code>argocd app set --helm-set</code> and verify the deployment scales:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#009-helm-integration-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>nginx-helm<span class="w"> </span>--helm-set<span class="w"> </span><span class="nv">replicaCount</span><span class="o">=</span><span class="m">3</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#009-helm-integration-__codelineno-7-2"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>nginx-helm
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#009-helm-integration-__codelineno-7-3"></a>kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>-n<span class="w"> </span>nginx-helm
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#009-helm-integration-__codelineno-7-4"></a><span class="c1"># Should show 3/3 replicas</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Print the rendered Helm manifests for the <code>nginx-helm</code> application:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#009-helm-integration-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>manifests<span class="w"> </span>nginx-helm
+</li>
+<li>
+<p>Print the rendered Helm manifests for the <code>nginx-helm</code> application:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#009-helm-integration-__codelineno-8-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>manifests<span class="w"> </span>nginx-helm
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="009-helm-integration-08-summary">08. Summary<a class="headerlink" href="#009-helm-integration-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2857,11 +2809,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="010-kustomize-06-hands-on">06. Hands-on<a class="headerlink" href="#010-kustomize-06-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create an ArgoCD Application using the <code>kustomize-guestbook</code> path from <code>argocd-example-apps</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#010-kustomize-__codelineno-5-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Create an ArgoCD Application using the <code>kustomize-guestbook</code> path from <code>argocd-example-apps</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#010-kustomize-__codelineno-5-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#010-kustomize-__codelineno-5-2"></a><span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#010-kustomize-__codelineno-5-3"></a><span class="w">  </span>--path<span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#010-kustomize-__codelineno-5-4"></a><span class="w">  </span>--dest-server<span class="w"> </span>https://kubernetes.default.svc<span class="w"> </span><span class="se">\</span>
@@ -2870,32 +2823,27 @@
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#010-kustomize-__codelineno-5-7"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>kustomize-guestbook
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#010-kustomize-__codelineno-5-8"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>kustomize-guestbook<span class="w"> </span>--health<span class="w"> </span>--timeout<span class="w"> </span><span class="m">120</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Override the image tag for the <code>kustomize-guestbook</code> app using <code>argocd app set --kustomize-image</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#010-kustomize-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Override the image tag for the <code>kustomize-guestbook</code> app using <code>argocd app set --kustomize-image</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#010-kustomize-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#010-kustomize-__codelineno-6-2"></a><span class="w">  </span>--kustomize-image<span class="w"> </span>gcr.io/heptio-images/ks-guestbook-demo:0.2
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#010-kustomize-__codelineno-6-3"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>kustomize-guestbook
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#010-kustomize-__codelineno-6-4"></a>argocd<span class="w"> </span>app<span class="w"> </span>manifests<span class="w"> </span>kustomize-guestbook<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>image
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Show the rendered manifests for the <code>kustomize-guestbook</code> application:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#010-kustomize-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>manifests<span class="w"> </span>kustomize-guestbook
+</li>
+<li>
+<p>Show the rendered manifests for the <code>kustomize-guestbook</code> application:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#010-kustomize-__codelineno-7-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>manifests<span class="w"> </span>kustomize-guestbook
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="010-kustomize-07-summary">07. Summary<a class="headerlink" href="#010-kustomize-07-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3011,39 +2959,35 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="011-notifications-07-hands-on">07. Hands-on<a class="headerlink" href="#011-notifications-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Verify the <code>argocd-notifications-controller</code> pod is running:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#011-notifications-__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>notifications
+<li>
+<p>Verify the <code>argocd-notifications-controller</code> pod is running:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#011-notifications-__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>notifications
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#011-notifications-__codelineno-6-2"></a><span class="c1"># argocd-notifications-controller-xxx   1/1   Running</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>View the current contents of <code>argocd-notifications-cm</code> to see any pre-configured templates and triggers:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#011-notifications-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-notifications-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
+</li>
+<li>
+<p>View the current contents of <code>argocd-notifications-cm</code> to see any pre-configured templates and triggers:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#011-notifications-__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-notifications-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Annotate the <code>guestbook</code> application to subscribe to the <code>on-sync-succeeded</code> trigger (even without a working Slack token, the annotation will be set):</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#011-notifications-__codelineno-8-1"></a>kubectl<span class="w"> </span>annotate<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Annotate the <code>guestbook</code> application to subscribe to the <code>on-sync-succeeded</code> trigger (even without a working Slack token, the annotation will be set):</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#011-notifications-__codelineno-8-1"></a>kubectl<span class="w"> </span>annotate<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#011-notifications-__codelineno-8-2"></a><span class="w">  </span><span class="s2">&quot;notifications.argoproj.io/subscribe.on-sync-succeeded.slack=general&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#011-notifications-__codelineno-8-3"></a><span class="w">  </span>--overwrite
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#011-notifications-__codelineno-8-4"></a>kubectl<span class="w"> </span>get<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="011-notifications-08-summary">08. Summary<a class="headerlink" href="#011-notifications-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3170,22 +3114,21 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="012-rbac-06-hands-on">06. Hands-on<a class="headerlink" href="#012-rbac-06-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>View the current RBAC configuration in <code>argocd-rbac-cm</code>:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#012-rbac-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-rbac-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
+<li>
+<p>View the current RBAC configuration in <code>argocd-rbac-cm</code>:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#012-rbac-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-rbac-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#012-rbac-__codelineno-5-2"></a><span class="c1"># Look for policy.csv and policy.default</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Create a <code>role:developer</code> that can only <code>get</code> and <code>sync</code> applications in the <code>default</code> project:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#012-rbac-__codelineno-6-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-rbac-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
+</li>
+<li>
+<p>Create a <code>role:developer</code> that can only <code>get</code> and <code>sync</code> applications in the <code>default</code> project:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#012-rbac-__codelineno-6-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-rbac-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#012-rbac-__codelineno-6-2"></a><span class="s1">  &quot;data&quot;: {</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#012-rbac-__codelineno-6-3"></a><span class="s1">    &quot;policy.csv&quot;: &quot;p, role:developer, applications, get, default/*, allow\np, role:developer, applications, sync, default/*, allow\n&quot;,</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#012-rbac-__codelineno-6-4"></a><span class="s1">    &quot;policy.default&quot;: &quot;role:readonly&quot;</span>
@@ -3193,20 +3136,17 @@
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#012-rbac-__codelineno-6-6"></a><span class="s1">}&#39;</span>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#012-rbac-__codelineno-6-7"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-rbac-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.policy\.csv}&#39;</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>List all ArgoCD accounts and their permissions:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#012-rbac-__codelineno-7-1"></a>argocd<span class="w"> </span>account<span class="w"> </span>list<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</li>
+<li>
+<p>List all ArgoCD accounts and their permissions:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#012-rbac-__codelineno-7-1"></a>argocd<span class="w"> </span>account<span class="w"> </span>list<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#012-rbac-__codelineno-7-2"></a>argocd<span class="w"> </span>account<span class="w"> </span>get<span class="w"> </span>admin<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="012-rbac-07-summary">07. Summary<a class="headerlink" href="#012-rbac-07-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3344,33 +3284,30 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="013-sso-07-hands-on">07. Hands-on<a class="headerlink" href="#013-sso-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Verify the <code>argocd-dex-server</code> pod is running and check its logs:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#013-sso-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>dex
+<li>
+<p>Verify the <code>argocd-dex-server</code> pod is running and check its logs:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#013-sso-__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>dex
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#013-sso-__codelineno-5-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>deploy/argocd-dex-server<span class="w"> </span>--tail<span class="o">=</span><span class="m">20</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Inspect the current <code>argocd-cm</code> ConfigMap for any existing SSO configuration:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#013-sso-__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
+</li>
+<li>
+<p>Inspect the current <code>argocd-cm</code> ConfigMap for any existing SSO configuration:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#013-sso-__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-o<span class="w"> </span>yaml
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#013-sso-__codelineno-6-2"></a><span class="c1"># Look for dex.config or oidc.config keys</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Configure the <code>argocd-cm</code> with a skeleton GitHub Dex connector (using placeholder values) and restart the Dex server:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#013-sso-__codelineno-7-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
+</li>
+<li>
+<p>Configure the <code>argocd-cm</code> with a skeleton GitHub Dex connector (using placeholder values) and restart the Dex server:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#013-sso-__codelineno-7-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#013-sso-__codelineno-7-2"></a><span class="s1">  &quot;data&quot;: {</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#013-sso-__codelineno-7-3"></a><span class="s1">    &quot;url&quot;: &quot;https://localhost:8080&quot;,</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#013-sso-__codelineno-7-4"></a><span class="s1">    &quot;dex.config&quot;: &quot;connectors:\n  - type: github\n    id: github\n    name: GitHub\n    config:\n      clientID: PLACEHOLDER\n      clientSecret: $dex.github.clientSecret\n      redirectURI: https://localhost:8080/api/dex/callback\n&quot;</span>
@@ -3379,9 +3316,8 @@
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#013-sso-__codelineno-7-7"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deploy/argocd-dex-server<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#013-sso-__codelineno-7-8"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>status<span class="w"> </span>deploy/argocd-dex-server<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--timeout<span class="o">=</span>60s<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="013-sso-08-summary">08. Summary<a class="headerlink" href="#013-sso-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3519,25 +3455,24 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="014-projects-06-hands-on">06. Hands-on<a class="headerlink" href="#014-projects-06-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create a project called <code>team-alpha</code> that restricts sources to <code>github.com/argoproj/*</code> repos and destinations to the <code>team-alpha</code> namespace:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#014-projects-__codelineno-5-1"></a>argocd<span class="w"> </span>proj<span class="w"> </span>create<span class="w"> </span>team-alpha<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Create a project called <code>team-alpha</code> that restricts sources to <code>github.com/argoproj/*</code> repos and destinations to the <code>team-alpha</code> namespace:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#014-projects-__codelineno-5-1"></a>argocd<span class="w"> </span>proj<span class="w"> </span>create<span class="w"> </span>team-alpha<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#014-projects-__codelineno-5-2"></a><span class="w">  </span>--description<span class="w"> </span><span class="s2">&quot;Team Alpha project&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#014-projects-__codelineno-5-3"></a><span class="w">  </span>--src<span class="w"> </span><span class="s2">&quot;https://github.com/argoproj/*&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#014-projects-__codelineno-5-4"></a><span class="w">  </span>--dest<span class="w"> </span><span class="s2">&quot;https://kubernetes.default.svc,team-alpha&quot;</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#014-projects-__codelineno-5-5"></a>argocd<span class="w"> </span>proj<span class="w"> </span>get<span class="w"> </span>team-alpha
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Try to create an Application in <code>team-alpha</code> project that deploys to a forbidden namespace and observe the error:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#014-projects-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>forbidden-app<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Try to create an Application in <code>team-alpha</code> project that deploys to a forbidden namespace and observe the error:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#014-projects-__codelineno-6-1"></a>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>forbidden-app<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#014-projects-__codelineno-6-2"></a><span class="w">  </span>--project<span class="w"> </span>team-alpha<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#014-projects-__codelineno-6-3"></a><span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#014-projects-__codelineno-6-4"></a><span class="w">  </span>--path<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
@@ -3545,20 +3480,17 @@
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#014-projects-__codelineno-6-6"></a><span class="w">  </span>--dest-namespace<span class="w"> </span>kube-system<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#014-projects-__codelineno-6-7"></a><span class="c1"># Expected: application destination server ... is not permitted in project &#39;team-alpha&#39;</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>List all projects and display their source and destination restrictions:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#014-projects-__codelineno-7-1"></a>argocd<span class="w"> </span>proj<span class="w"> </span>list
+</li>
+<li>
+<p>List all projects and display their source and destination restrictions:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#014-projects-__codelineno-7-1"></a>argocd<span class="w"> </span>proj<span class="w"> </span>list
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#014-projects-__codelineno-7-2"></a>argocd<span class="w"> </span>proj<span class="w"> </span>get<span class="w"> </span>team-alpha
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="014-projects-07-summary">07. Summary<a class="headerlink" href="#014-projects-07-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3727,11 +3659,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="015-waves-hooks-06-hands-on">06. Hands-on<a class="headerlink" href="#015-waves-hooks-06-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create a PreSync hook Job that prints &ldquo;Pre-sync complete&rdquo; and verify it runs before the main deployment:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#015-waves-hooks-__codelineno-5-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
+<li>
+<p>Create a PreSync hook Job that prints &ldquo;Pre-sync complete&rdquo; and verify it runs before the main deployment:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#015-waves-hooks-__codelineno-5-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#015-waves-hooks-__codelineno-5-2"></a><span class="s">apiVersion: batch/v1</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#015-waves-hooks-__codelineno-5-3"></a><span class="s">kind: Job</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#015-waves-hooks-__codelineno-5-4"></a><span class="s">metadata:</span>
@@ -3753,15 +3686,13 @@
 </span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#015-waves-hooks-__codelineno-5-20"></a>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
 </span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#015-waves-hooks-__codelineno-5-21"></a>kubectl<span class="w"> </span>get<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>-n<span class="w"> </span>guestbook
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Add <code>sync-wave</code> annotations to two ConfigMaps so that ConfigMap A (wave 1) is applied before ConfigMap B (wave 2):</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#015-waves-hooks-__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+</li>
+<li>
+<p>Add <code>sync-wave</code> annotations to two ConfigMaps so that ConfigMap A (wave 1) is applied before ConfigMap B (wave 2):</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#015-waves-hooks-__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#015-waves-hooks-__codelineno-6-2"></a><span class="s">apiVersion: v1</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#015-waves-hooks-__codelineno-6-3"></a><span class="s">kind: ConfigMap</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#015-waves-hooks-__codelineno-6-4"></a><span class="s">metadata:</span>
@@ -3783,9 +3714,8 @@
 </span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#015-waves-hooks-__codelineno-6-20"></a><span class="s">  order: second</span>
 </span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#015-waves-hooks-__codelineno-6-21"></a><span class="s">EOF</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="015-waves-hooks-07-summary">07. Summary<a class="headerlink" href="#015-waves-hooks-07-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3941,25 +3871,24 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="016-secrets-management-05-hands-on">05. Hands-on<a class="headerlink" href="#016-secrets-management-05-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Install the Sealed Secrets controller and verify it is running:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#016-secrets-management-__codelineno-4-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
+<li>
+<p>Install the Sealed Secrets controller and verify it is running:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#016-secrets-management-__codelineno-4-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#016-secrets-management-__codelineno-4-2"></a>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>pods<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#016-secrets-management-__codelineno-4-3"></a><span class="w">  </span>-l<span class="w"> </span><span class="nv">name</span><span class="o">=</span>sealed-secrets-controller<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#016-secrets-management-__codelineno-4-4"></a><span class="w">  </span>-n<span class="w"> </span>kube-system<span class="w"> </span>--timeout<span class="o">=</span>120s<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#016-secrets-management-__codelineno-4-5"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>sealed-secrets
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Create a Kubernetes Secret, seal it with <code>kubeseal</code>, and apply the SealedSecret to the cluster. Verify the decrypted Secret is created:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#016-secrets-management-__codelineno-5-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>lab-secret<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Create a Kubernetes Secret, seal it with <code>kubeseal</code>, and apply the SealedSecret to the cluster. Verify the decrypted Secret is created:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#016-secrets-management-__codelineno-5-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>lab-secret<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#016-secrets-management-__codelineno-5-2"></a><span class="w">  </span>--from-literal<span class="o">=</span>api-key<span class="o">=</span>my-super-secret-key<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#016-secrets-management-__codelineno-5-3"></a><span class="w">  </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#016-secrets-management-__codelineno-5-4"></a><span class="w">  </span>kubeseal<span class="w"> </span>--format<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>/tmp/lab-sealed-secret.yaml
@@ -3968,20 +3897,17 @@
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#016-secrets-management-__codelineno-5-7"></a>sleep<span class="w"> </span><span class="m">5</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#016-secrets-management-__codelineno-5-8"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>lab-secret<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.api-key}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Delete the SealedSecret and verify that the Kubernetes Secret is also cleaned up:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#016-secrets-management-__codelineno-6-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>/tmp/lab-sealed-secret.yaml
+</li>
+<li>
+<p>Delete the SealedSecret and verify that the Kubernetes Secret is also cleaned up:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#016-secrets-management-__codelineno-6-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>/tmp/lab-sealed-secret.yaml
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#016-secrets-management-__codelineno-6-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>lab-secret<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Secret was cleaned up&quot;</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="016-secrets-management-06-summary">06. Summary<a class="headerlink" href="#016-secrets-management-06-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4086,26 +4012,25 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="017-image-updater-07-hands-on">07. Hands-on<a class="headerlink" href="#017-image-updater-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Install ArgoCD Image Updater and verify the pod is running:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#017-image-updater-__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Install ArgoCD Image Updater and verify the pod is running:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#017-image-updater-__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#017-image-updater-__codelineno-6-2"></a><span class="w">  </span>-f<span class="w"> </span>https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#017-image-updater-__codelineno-6-3"></a>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>pods<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#017-image-updater-__codelineno-6-4"></a><span class="w">  </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span>argocd-image-updater<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#017-image-updater-__codelineno-6-5"></a><span class="w">  </span>-n<span class="w"> </span>argocd<span class="w"> </span>--timeout<span class="o">=</span>120s<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#017-image-updater-__codelineno-6-6"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>image-updater
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Annotate the <code>guestbook</code> application to use Image Updater with the <code>latest</code> update strategy for the <code>ks-guestbook-demo</code> image:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#017-image-updater-__codelineno-7-1"></a>kubectl<span class="w"> </span>annotate<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>Annotate the <code>guestbook</code> application to use Image Updater with the <code>latest</code> update strategy for the <code>ks-guestbook-demo</code> image:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#017-image-updater-__codelineno-7-1"></a>kubectl<span class="w"> </span>annotate<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#017-image-updater-__codelineno-7-2"></a><span class="w">  </span><span class="s2">&quot;argocd-image-updater.argoproj.io/image-list=ks-guestbook=gcr.io/heptio-images/ks-guestbook-demo&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#017-image-updater-__codelineno-7-3"></a><span class="w">  </span><span class="s2">&quot;argocd-image-updater.argoproj.io/ks-guestbook.update-strategy=latest&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#017-image-updater-__codelineno-7-4"></a><span class="w">  </span><span class="s2">&quot;argocd-image-updater.argoproj.io/write-back-method=argocd&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -4113,19 +4038,16 @@
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#017-image-updater-__codelineno-7-6"></a>kubectl<span class="w"> </span>get<span class="w"> </span>application<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#017-image-updater-__codelineno-7-7"></a><span class="w">  </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Check the Image Updater logs to see if it detected any images:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#017-image-updater-__codelineno-8-1"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>deploy/argocd-image-updater<span class="w"> </span>--tail<span class="o">=</span><span class="m">30</span>
+</li>
+<li>
+<p>Check the Image Updater logs to see if it detected any images:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#017-image-updater-__codelineno-8-1"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>deploy/argocd-image-updater<span class="w"> </span>--tail<span class="o">=</span><span class="m">30</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="017-image-updater-08-summary">08. Summary<a class="headerlink" href="#017-image-updater-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4298,11 +4220,12 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="018-ci-integration-07-hands-on">07. Hands-on<a class="headerlink" href="#018-ci-integration-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Create an ArgoCD API key for a <code>ci-bot</code> account and verify it can list applications:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#018-ci-integration-__codelineno-6-1"></a><span class="c1"># Add ci-bot account to argocd-cm</span>
+<li>
+<p>Create an ArgoCD API key for a <code>ci-bot</code> account and verify it can list applications:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#018-ci-integration-__codelineno-6-1"></a><span class="c1"># Add ci-bot account to argocd-cm</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#018-ci-integration-__codelineno-6-2"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>argocd-cm<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#018-ci-integration-__codelineno-6-3"></a><span class="s1">  &quot;data&quot;: {&quot;accounts.ci-bot&quot;: &quot;apiKey&quot;}</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#018-ci-integration-__codelineno-6-4"></a><span class="s1">}&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
@@ -4316,15 +4239,13 @@
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#018-ci-integration-__codelineno-6-12"></a><span class="nv">CI_TOKEN</span><span class="o">=</span><span class="k">$(</span>argocd<span class="w"> </span>account<span class="w"> </span>generate-token<span class="w"> </span>--account<span class="w"> </span>ci-bot<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;NOT_GENERATED&quot;</span><span class="k">)</span>
 </span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#018-ci-integration-__codelineno-6-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CI Bot token: </span><span class="nv">$CI_TOKEN</span><span class="s2">&quot;</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Write a shell script that simulates the &ldquo;update image tag in manifests&rdquo; step by patching a Deployment&rsquo;s image in a local YAML file:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#018-ci-integration-__codelineno-7-1"></a><span class="nv">NEW_TAG</span><span class="o">=</span><span class="s2">&quot;sha-</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">&quot;</span>
+</li>
+<li>
+<p>Write a shell script that simulates the &ldquo;update image tag in manifests&rdquo; step by patching a Deployment&rsquo;s image in a local YAML file:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#018-ci-integration-__codelineno-7-1"></a><span class="nv">NEW_TAG</span><span class="o">=</span><span class="s2">&quot;sha-</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">&quot;</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#018-ci-integration-__codelineno-7-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Simulating CI image tag update to: </span><span class="nv">$NEW_TAG</span><span class="s2">&quot;</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#018-ci-integration-__codelineno-7-3"></a><span class="c1"># In a real scenario you would use yq or sed on your manifests repo</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#018-ci-integration-__codelineno-7-4"></a>kubectl<span class="w"> </span><span class="nb">set</span><span class="w"> </span>image<span class="w"> </span>deployment/guestbook-ui<span class="w"> </span><span class="se">\</span>
@@ -4332,9 +4253,8 @@
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#018-ci-integration-__codelineno-7-6"></a><span class="w">  </span>-n<span class="w"> </span>guestbook<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#018-ci-integration-__codelineno-7-7"></a>argocd<span class="w"> </span>app<span class="w"> </span>diff<span class="w"> </span>guestbook<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="018-ci-integration-08-summary">08. Summary<a class="headerlink" href="#018-ci-integration-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4526,24 +4446,23 @@
 <p><img src="../assets/images/practice.png" alt="Practice" width="800"/></p>
 <h2 id="019-monitoring-07-hands-on">07. Hands-on<a class="headerlink" href="#019-monitoring-07-hands-on" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Port-forward the ArgoCD metrics endpoint and list all <code>argocd_app_info</code> metrics:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#019-monitoring-__codelineno-6-1"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/argocd-metrics<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="m">8082</span>:8082<span class="w"> </span><span class="p">&amp;</span>
+<li>
+<p>Port-forward the ArgoCD metrics endpoint and list all <code>argocd_app_info</code> metrics:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#019-monitoring-__codelineno-6-1"></a>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/argocd-metrics<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span><span class="m">8082</span>:8082<span class="w"> </span><span class="p">&amp;</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#019-monitoring-__codelineno-6-2"></a>sleep<span class="w"> </span><span class="m">2</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#019-monitoring-__codelineno-6-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8082/metrics<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^argocd_app_info&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-10
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#019-monitoring-__codelineno-6-4"></a><span class="nb">kill</span><span class="w"> </span>%1<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Install <code>kube-prometheus-stack</code> and verify Prometheus and Grafana are running:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#019-monitoring-__codelineno-7-1"></a>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>prometheus-community<span class="w"> </span>https://prometheus-community.github.io/helm-charts<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</li>
+<li>
+<p>Install <code>kube-prometheus-stack</code> and verify Prometheus and Grafana are running:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#019-monitoring-__codelineno-7-1"></a>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>prometheus-community<span class="w"> </span>https://prometheus-community.github.io/helm-charts<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#019-monitoring-__codelineno-7-2"></a>helm<span class="w"> </span>repo<span class="w"> </span>update<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#019-monitoring-__codelineno-7-3"></a>helm<span class="w"> </span>install<span class="w"> </span>kube-prometheus-stack<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#019-monitoring-__codelineno-7-4"></a><span class="w">  </span>prometheus-community/kube-prometheus-stack<span class="w"> </span><span class="se">\</span>
@@ -4551,15 +4470,13 @@
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#019-monitoring-__codelineno-7-6"></a><span class="w">  </span>--set<span class="w"> </span>grafana.adminPassword<span class="o">=</span>admin123<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#019-monitoring-__codelineno-7-7"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>monitoring
 </span></code></pre></div>
-
-   </details>
-
-<ol>
-<li>Create a <code>PrometheusRule</code> that fires an alert when any ArgoCD application is <code>OutOfSync</code> for more than 5 minutes:</li>
-</ol>
-<details><summary>Solution</summary>
-
-   <div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#019-monitoring-__codelineno-8-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
+</li>
+<li>
+<p>Create a <code>PrometheusRule</code> that fires an alert when any ArgoCD application is <code>OutOfSync</code> for more than 5 minutes:</p>
+<details class="success">
+<summary>Solution</summary>
+</details>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#019-monitoring-__codelineno-8-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#019-monitoring-__codelineno-8-2"></a><span class="s">apiVersion: monitoring.coreos.com/v1</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#019-monitoring-__codelineno-8-3"></a><span class="s">kind: PrometheusRule</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#019-monitoring-__codelineno-8-4"></a><span class="s">metadata:</span>
@@ -4581,9 +4498,8 @@
 </span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#019-monitoring-__codelineno-8-20"></a><span class="s">EOF</span>
 </span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#019-monitoring-__codelineno-8-21"></a>kubectl<span class="w"> </span>get<span class="w"> </span>prometheusrule<span class="w"> </span>-n<span class="w"> </span>monitoring
 </span></code></pre></div>
-
-   </details>
-
+</li>
+</ol>
 <hr />
 <h2 id="019-monitoring-08-summary">08. Summary<a class="headerlink" href="#019-monitoring-08-summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4592,14 +4508,7 @@
 <li>🔹 ServiceMonitors configure Prometheus to scrape ArgoCD endpoints automatically</li>
 <li>🔹 The community Grafana dashboard ID <code>14584</code> provides a comprehensive ArgoCD overview</li>
 <li>🔹 Alert on <code>OutOfSync</code> (&gt;5min) and <code>Degraded</code> health to catch issues before users notice them</li>
-</ul></section><section class="print-page" id="020-disaster-recovery" heading-number="2.22"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-019-monitoring">:arrow_backward: 019-monitoring</a>&emsp;<a href="#labs">Back to labs list</a>&emsp;<a href="#labs-021-multi-tenancy">021-multi-tenancy :arrow_forward:</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="020-disaster-recovery-disaster-recovery">Disaster Recovery<a class="headerlink" href="#020-disaster-recovery-disaster-recovery" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="020-disaster-recovery" heading-number="2.22"><h1 id="020-disaster-recovery-disaster-recovery">Disaster Recovery<a class="headerlink" href="#020-disaster-recovery-disaster-recovery" title="Permanent link">&para;</a></h1>
 <ul>
 <li>ArgoCD state (Applications, AppProjects, repository credentials) is stored as Kubernetes resources that can be exported and re-imported.</li>
 <li>Because Git is the source of truth, a fresh ArgoCD install can re-sync all workloads automatically.</li>
@@ -4762,14 +4671,7 @@
 <li>🔹 Git is the ultimate source of truth - a new ArgoCD install re-syncs all workloads automatically</li>
 <li>🔹 HA mode runs multiple replicas of <code>argocd-server</code> and <code>argocd-repo-server</code> plus Redis sentinel</li>
 <li>🔹 Store ArgoCD configuration (projects, RBAC, app definitions) in Git and manage it with an App-of-Apps</li>
-</ul></section><section class="print-page" id="021-multi-tenancy" heading-number="2.23"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-020-disaster-recovery">:arrow_backward: 020-disaster-recovery</a>&emsp;<a href="#labs">Back to labs list</a>&emsp;<a href="#labs-022-app-sets">022-app-sets :arrow_forward:</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="021-multi-tenancy-multi-tenancy">Multi-Tenancy<a class="headerlink" href="#021-multi-tenancy-multi-tenancy" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="021-multi-tenancy" heading-number="2.23"><h1 id="021-multi-tenancy-multi-tenancy">Multi-Tenancy<a class="headerlink" href="#021-multi-tenancy-multi-tenancy" title="Permanent link">&para;</a></h1>
 <ul>
 <li>ArgoCD AppProjects provide the primary isolation boundary - restricting source repos, destination clusters, and resource kinds per tenant.</li>
 <li>RBAC policies control which users and groups can access which applications and projects.</li>
@@ -4919,14 +4821,7 @@
 <li>🔹 Namespace resource quotas enforce hard CPU/memory limits independent of ArgoCD</li>
 <li>🔹 The <code>clusterResourceWhitelist: []</code> setting prevents tenants from creating cluster-scoped resources like ClusterRoles</li>
 <li>🔹 Use the App-of-Apps pattern (Lab 008) to bootstrap new tenant projects from a Git-managed onboarding repo</li>
-</ul></section><section class="print-page" id="022-app-sets" heading-number="2.24"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-021-multi-tenancy">:arrow_backward: 021-multi-tenancy</a>&emsp;<a href="#labs">Back to labs list</a>&emsp;<a href="#labs-023-progressive-delivery">023-progressive-delivery :arrow_forward:</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="022-app-sets-applicationsets">ApplicationSets<a class="headerlink" href="#022-app-sets-applicationsets" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="022-app-sets" heading-number="2.24"><h1 id="022-app-sets-applicationsets">ApplicationSets<a class="headerlink" href="#022-app-sets-applicationsets" title="Permanent link">&para;</a></h1>
 <ul>
 <li>ApplicationSets automate the creation of ArgoCD Applications using generators - templating apps from lists, cluster registries, or Git directory structures.</li>
 <li>A single ApplicationSet can deploy to dozens of environments or clusters without duplicating Application manifests.</li>
@@ -5125,14 +5020,7 @@
 <li>🔹 The <strong>Cluster generator</strong> targets all (or labeled) registered clusters automatically</li>
 <li>🔹 The <strong>Git directory generator</strong> auto-discovers apps from repository folder structure</li>
 <li>🔹 The <strong>Matrix generator</strong> combines two generators to produce a Cartesian product (e.g., apps × environments)</li>
-</ul></section><section class="print-page" id="023-progressive-delivery" heading-number="2.25"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-022-app-sets">:arrow_backward: 022-app-sets</a>&emsp;<a href="#labs">Back to labs list</a>&emsp;<a href="#labs-024-gitops-best-practices">024-gitops-best-practices :arrow_forward:</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="023-progressive-delivery-progressive-delivery">Progressive Delivery<a class="headerlink" href="#023-progressive-delivery-progressive-delivery" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="023-progressive-delivery" heading-number="2.25"><h1 id="023-progressive-delivery-progressive-delivery">Progressive Delivery<a class="headerlink" href="#023-progressive-delivery-progressive-delivery" title="Permanent link">&para;</a></h1>
 <ul>
 <li>Argo Rollouts extends Kubernetes Deployments with advanced release strategies: Canary, Blue/Green, and Analysis-based promotion.</li>
 <li>Traffic is shifted gradually - a percentage goes to the new version while the rest stays on stable.</li>
@@ -5317,14 +5205,7 @@
 <li>🔹 <strong>Blue/Green</strong> runs two full replica sets simultaneously; active receives live traffic, preview receives test traffic</li>
 <li>🔹 <code>AnalysisTemplates</code> query Prometheus (or Datadog, New Relic, etc.) to auto-promote or auto-abort based on real metrics</li>
 <li>🔹 <code>kubectl argo rollouts promote</code> and <code>abort</code> give operators manual control at any pause step</li>
-</ul></section><section class="print-page" id="024-gitops-best-practices" heading-number="2.26"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-023-progressive-delivery">:arrow_backward: 023-progressive-delivery</a>&emsp;<a href="#labs">Back to labs list</a>&emsp;<a href="#labs-025-advanced-patterns">025-advanced-patterns :arrow_forward:</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="024-gitops-best-practices-gitops-best-practices">GitOps Best Practices<a class="headerlink" href="#024-gitops-best-practices-gitops-best-practices" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="024-gitops-best-practices" heading-number="2.26"><h1 id="024-gitops-best-practices-gitops-best-practices">GitOps Best Practices<a class="headerlink" href="#024-gitops-best-practices-gitops-best-practices" title="Permanent link">&para;</a></h1>
 <ul>
 <li>GitOps is effective only when the repository structure, branching strategy, and promotion workflow are designed intentionally.</li>
 <li>Keeping Git as the single source of truth requires discipline: no <code>kubectl apply</code> by hand, no out-of-band secrets.</li>
@@ -5512,14 +5393,7 @@
 <li>🔹 CI writes image tags back to Git; ArgoCD detects the commit and deploys - no <code>kubectl</code> in CI pipelines</li>
 <li>🔹 Production sync should be <strong>manual</strong> (or require PR approval) to prevent accidental auto-deploys</li>
 <li>🔹 Never commit plaintext secrets - use Sealed Secrets, External Secrets Operator, or SOPS</li>
-</ul></section><section class="print-page" id="025-advanced-patterns" heading-number="2.27"><!--- Labs Navigation Start -->
-<p style="text-align: center;">
-    <a href="#labs-024-gitops-best-practices">:arrow_backward: 024-gitops-best-practices</a>&emsp;<a href="#labs">Back to labs list</a>
-</p>
-<!--- Labs Navigation End -->
-
-<hr />
-<h1 id="025-advanced-patterns-advanced-patterns">Advanced Patterns<a class="headerlink" href="#025-advanced-patterns-advanced-patterns" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="025-advanced-patterns" heading-number="2.27"><h1 id="025-advanced-patterns-advanced-patterns">Advanced Patterns<a class="headerlink" href="#025-advanced-patterns-advanced-patterns" title="Permanent link">&para;</a></h1>
 <ul>
 <li>Config Management Plugins (CMP) extend ArgoCD to support any templating tool not natively supported.</li>
 <li>The ArgoCD API and <code>argocd</code> CLI enable automation: programmatic app creation, sync triggering, and status polling.</li>
